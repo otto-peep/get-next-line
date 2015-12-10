@@ -1,20 +1,29 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.h                                    :+:      :+:    :+:   */
+/*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/07 18:55:05 by pconin            #+#    #+#             */
-/*   Updated: 2015/12/08 16:17:50 by pconin           ###   ########.fr       */
+/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
+/*   Updated: 2015/12/08 17:42:27 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef GET_NEXT_LINE_H
+#include <unistd.h>
+#include <stdio.h>
+#include "get_next_line.h"
+#include <fcntl.h>
 
-# define GET_NEXT_LINE_H
-#define BUFF_SIZE 200
+int	main(void)
+{
+	int ret;
+	char **tab;
+	int fd;
 
-int		get_next_line(int const fd, char ** line);
-
-#endif
+	fd = open("readme.txt", O_RDWR);
+//	printf("%s", "hello\nworld\ngoood\nmorning");
+	ret = get_next_line(fd, tab);
+	//		printf("%i\n%s\n%s\n", ret, tab[1], tab[2]);
+	return (0);
+}
