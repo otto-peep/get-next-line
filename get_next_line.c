@@ -1,90 +1,58 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line.c                                    :+:      :+:    :+:   */
+/*   get_next_line2.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/07 19:15:54 by pconin            #+#    #+#             */
-/*   Updated: 2015/12/08 17:42:30 by pconin           ###   ########.fr       */
+/*   Created: 2016/01/13 11:40:29 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/13 16:02:21 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdlib.h>
 #include <stdio.h>
-#include <errno.h>
-#define BUFF_SIZE 10
+#include "get_next_line.h"
+#include <stdlib.h>
 
-void	ft_putlinetab(char *str, int begin, unsigned int end, int line, char **tab)
-{
-	int index;
-
-	printf("%s", "a");
-	index = 0;
-	tab[line] = (char *) malloc(sizeof(char) * (end - begin));
-	while (begin < end)
-	{
-		tab[line][index] = str[begin];
-		index++;
-		begin++;
-	}
-	tab[line][index] = '\0';
-}
-
-int	fd_endline(char *str, unsigned int ind, int line, char **tab )
-{
-	int begin;
-
-	printf("%s", "b");
-	begin = ind;
-	while (str[ind])
-	{
-		if (str[ind] == '\n' || str[ind] == '4') 
-		{	
-			ft_putlinetab(str, begin, ind, line, tab);
-			ind++;
-			line++;
-			return (0);			
-		}
-		ind++;
-	}
-	return (-1);
-}
-
-int	ft_countline(char *str, char **tab)
+int		ft_mallocandput(char *temp, char **line, int len, int nb)
 {
 	int a;
 
-	printf("%s", "c");
 	a = 0;
-	while (str[a] != '4')
+//	ft_putstr(temp);
+//	ft_putstr("\n");
+	line[nb] = (char *) malloc(sizeof(char) * len);
+	while (a != len)
 	{
-		if (str[a] == '\n')
-			while (str[a] != '\n')
-				a++;
+		line[nb][a] = temp[a];
+		a++;
 	}
-	tab = (char **)malloc(sizeof(char*) * a);
-	if (tab == NULL)
-		return (-1);
-	return (0);
+	line[nb][a] = '\0';
+	return (1);
 }
 
-
-int			get_next_line(int const fd, char **line)
+int		get_next_line(int const fd, char **line)
 {
-	char	*buff;
-	int		ret;
-	static int	nbline = 0;
-	static unsigned int	index = 0;
+	static int index;
+	static int nb;
+	char temp[BUFF_SIZE];
+	int memory;
+	int ret;
 
-	printf("%s", "d");
-	ret = read(fd, buff, BUFF_SIZE);
-	printf("\n%d", errno);
+//	printf("%i\n", index);
+//	ft_putstr("before read");
+	ret = read(fd, temp, BUFF_SIZE);
+//	ft_putstr(temp);
 	if (ret == -1)
-		return (0);
-//	ret = ft_countline(buff, line);
-//	ret =  fd_endline(buff, nbline, index, line);
-	printf("%s", "e");
-	return (ret);
+		return (-1);
+//	ft_putstr("afterread");
+	memory = index;
+	while (temp[index] != '\n' && temp[index])
+		index++;
+	ret = ft_mallocandput(ft_strsub(temp, memory, index - memory),
+		   	line, index - memory, nb);
+	nb++;
+//	index++;
+	return (0);
 }
