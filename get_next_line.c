@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 11:40:29 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/13 16:02:21 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/13 17:05:29 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,10 +39,17 @@ int		get_next_line(int const fd, char **line)
 	char temp[BUFF_SIZE];
 	int memory;
 	int ret;
+	int a = 0;
 
 //	printf("%i\n", index);
 //	ft_putstr("before read");
-	ret = read(fd, temp, BUFF_SIZE);
+	while (a != 4)
+	{
+		ret = read(fd, temp, BUFF_SIZE);
+		
+		ft_putstr(temp);
+		a++;
+	}
 //	ft_putstr(temp);
 	if (ret == -1)
 		return (-1);
@@ -50,9 +57,9 @@ int		get_next_line(int const fd, char **line)
 	memory = index;
 	while (temp[index] != '\n' && temp[index])
 		index++;
-	ret = ft_mallocandput(ft_strsub(temp, memory, index - memory),
-		   	line, index - memory, nb);
+	//ret = ft_mallocandput(ft_strsub(temp, memory, index - memory),
+	//	   	line, index - memory, nb);
 	nb++;
-//	index++;
+	index++;
 	return (0);
 }

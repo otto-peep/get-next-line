@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/13 16:21:14 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/13 16:56:55 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,11 @@ int	main(void)
 	{
 		//ft_putstr("whilemain");
 		ret = get_next_line(fd, tab);
-		ft_putstr(tab[a]);
-		ft_putstr("\n");
-		a++;
+	//	ft_putstr(tab[a]);
+	//	ft_putstr("\n");
+		a = 4;
 	}
+
+
 	return (0);
 }
