@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 11:40:29 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/13 17:05:29 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/14 18:56:12 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,51 +15,64 @@
 #include "get_next_line.h"
 #include <stdlib.h>
 
-int		ft_mallocandput(char *temp, char **line, int len, int nb)
+char	*ft_strjoin(char *s1, char *s2)
+{
+	int		size;
+	char	*rtn;
+
+	if (!s1 && !s2)
+		return (NULL);
+	if (s1 && s2)
+	{
+		size = ft_strlen(s1) + ft_strlen(s2);
+		rtn = (char *)malloc(sizeof(char) * (size + 1));
+		if (rtn == NULL)
+			return (NULL);
+		ft_strcpy(rtn, s1);
+		ft_strcat(rtn, s2);
+		return (rtn);
+	}
+	if (s1 && !s2)
+		return (ft_strdup(s1));
+	else
+		return (ft_strdup(s2));
+}
+
+int		ft_check(char *temp, int buf)
 {
 	int a;
 
 	a = 0;
-//	ft_putstr(temp);
-//	ft_putstr("\n");
-	line[nb] = (char *) malloc(sizeof(char) * len);
-	while (a != len)
+	while (buf > 0)
 	{
-		line[nb][a] = temp[a];
+		if (temp[a] == '\n' || !(temp[a]))
+			return (1);
+		buf--;
 		a++;
 	}
-	line[nb][a] = '\0';
-	return (1);
+	return (0);	
 }
 
 int		get_next_line(int const fd, char **line)
 {
-	static int index;
+	static int *index;
 	static int nb;
-	char temp[BUFF_SIZE];
-	int memory;
+	char temp[BUFF_SIZE + 1];
+	int bool;
 	int ret;
-	int a = 0;
 
-//	printf("%i\n", index);
-//	ft_putstr("before read");
-	while (a != 4)
+	bool = 0;
+	while (bool != 1)
 	{
+		ft_putstr("avant le strjoin \n ");
+		&line[nb] = *ft_strjoin(line[nb], temp);
 		ret = read(fd, temp, BUFF_SIZE);
-		
-		ft_putstr(temp);
-		a++;
+		temp[BUFF_SIZE] = '\0';
+		bool = ft_check(temp, BUFF_SIZE);
+		ft_putstr("voila le tab : \n");
+		ft_putstr(line[nb]);
+		ft_putstr("\n");
 	}
-//	ft_putstr(temp);
-	if (ret == -1)
-		return (-1);
-//	ft_putstr("afterread");
-	memory = index;
-	while (temp[index] != '\n' && temp[index])
-		index++;
-	//ret = ft_mallocandput(ft_strsub(temp, memory, index - memory),
-	//	   	line, index - memory, nb);
 	nb++;
-	index++;
-	return (0);
+	return (ret);
 }

@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/13 16:56:55 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/14 18:48:58 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,13 +25,15 @@ int	main(void)
 	a = 0;
 //	fd = open("readme.txt", O_RDWR);
 	fd = 0;
+	tab = NULL;
 	while (a != 4)
 	{
 		//ft_putstr("whilemain");
 		ret = get_next_line(fd, tab);
-	//	ft_putstr(tab[a]);
-	//	ft_putstr("\n");
-		a = 4;
+
+//		ft_putstr(tab[0]);
+		ft_putstr("dans la boucle du main \n");
+		a++;
 	}
 
 
