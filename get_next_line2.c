@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/13 11:40:29 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/14 18:56:12 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/19 18:07:39 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,14 +55,13 @@ int		ft_check(char *temp, int buf)
 
 int		get_next_line(int const fd, char **line)
 {
-	static int *index;
-	static int nb;
+	static int *ret = 0;
 	char temp[BUFF_SIZE + 1];
 	int bool;
 	int ret;
 
 	bool = 0;
-	while (bool != 1)
+	while (k = read(fd, buff, BUFFSIZE)) == 1 && )
 	{
 		ft_putstr("avant le strjoin \n ");
 		&line[nb] = *ft_strjoin(line[nb], temp);
