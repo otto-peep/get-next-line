@@ -1,78 +1,82 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   get_next_line2.c                                   :+:      :+:    :+:   */
+/*   get_next_line.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/13 11:40:29 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/14 18:56:12 by pconin           ###   ########.fr       */
+/*   Created: 2016/01/19 12:29:38 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/19 14:48:01 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
-#include <stdlib.h>
+#define BUFFSIZE	1024
 
-char	*ft_strjoin(char *s1, char *s2)
+char	*finish(char *l, int j)
 {
-	int		size;
-	char	*rtn;
-
-	if (!s1 && !s2)
-		return (NULL);
-	if (s1 && s2)
+	static int    tmp = 0;
+	if (j == 0)
+		return (0);
+	if (tmp == 0)
 	{
-		size = ft_strlen(s1) + ft_strlen(s2);
-		rtn = (char *)malloc(sizeof(char) * (size + 1));
-		if (rtn == NULL)
-			return (NULL);
-		ft_strcpy(rtn, s1);
-		ft_strcat(rtn, s2);
-		return (rtn);
+		tmp = 1;
+		return (l);
 	}
-	if (s1 && !s2)
-		return (ft_strdup(s1));
 	else
-		return (ft_strdup(s2));
+		return (0);
 }
 
-int		ft_check(char *temp, int buf)
+char    *ft_alloc(char *l, int j)
 {
-	int a;
+	int   i;
+	char  *new;
 
-	a = 0;
-	while (buf > 0)
+	i = 0;
+	new = NULL;
+	if (j == 0 && ((l = malloc((BUFFSIZE + 1) * sizeof(char))) == NULL))
+		return (-1);
+	if (j == 0)
+		return (l);
+	if ((new = malloc((j + BUFFSIZE + 1) * sizeof(char))) == NULL)
+		return (-1);
+	while (i <= j)
 	{
-		if (temp[a] == '\n' || !(temp[a]))
+		new[i] = l[i];
+		i++;
+	}
+	new[i] = '\0';
+	free(l);
+	return (new);
+}
+
+char *ft_get_next_line(int const fd, char **l)
+{
+	static int	i = 0;
+	static int	j = 0;
+	static int	k = 0;
+	static char	buff[BUFFSIZE];
+
+	if (i == 0 && (k = read(fd, buff, BUFFSIZE)) == 0)
+		return (finish(l[nb], j));
+	if ((l[nb] = ft_alloc(l[nb], j)) == NULL)
+		return (0);
+	while (i < k)
+	{
+		if (buff[i] == '\n')
+		{
+			i++;
+			l[j] = '\0';
+			j = 0;
+			nb++;
 			return (1);
-		buf--;
-		a++;
+		}
+		if (!buff[i])
+			return (0);
+		*l[j] = buff[i];
+		i++;
+		j++;
 	}
-	return (0);	
+	i = 0;
+	return (get_next_line(fd));
 }
 
-int		get_next_line(int const fd, char **line)
-{
-	static int *index;
-	static int nb;
-	char temp[BUFF_SIZE + 1];
-	int bool;
-	int ret;
-
-	bool = 0;
-	while (bool != 1)
-	{
-		ft_putstr("avant le strjoin \n ");
-		&line[nb] = *ft_strjoin(line[nb], temp);
-		ret = read(fd, temp, BUFF_SIZE);
-		temp[BUFF_SIZE] = '\0';
-		bool = ft_check(temp, BUFF_SIZE);
-		ft_putstr("voila le tab : \n");
-		ft_putstr(line[nb]);
-		ft_putstr("\n");
-	}
-	nb++;
-	return (ret);
-}
