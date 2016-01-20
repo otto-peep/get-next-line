@@ -1,40 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_lstmap.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/12/09 19:01:30 by pconin            #+#    #+#             */
+/*   Updated: 2015/12/13 15:27:10 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
 #include "libft.h"
-#include <fcntl.h>
+#include <stdlib.h>
 
-int	main(void)
+t_list	*ft_lstmap(t_list *lst, t_list *(*f)(t_list *elem))
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	t_list	*newlist;
+	t_list	*temp;
+	t_list	*chain;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	newlist = NULL;
+	if (lst == NULL || f == NULL)
+		return (NULL);
+	newlist = f(lst);
+	temp = newlist;
+	lst = lst->next;
+	while (lst)
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		chain = f(lst);
+		if (chain == NULL)
+			return (NULL);
+		temp->next = chain;
+		temp = temp->next;
+		lst = lst->next;
 	}
-
-
-	return (0);
+	return (newlist);
 }

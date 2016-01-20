@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strdup.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/23 18:06:18 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/11 14:40:12 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
+#include <string.h>
 #include "libft.h"
-#include <fcntl.h>
+#include <stdlib.h>
 
-int	main(void)
+char		*ft_strdup(const char *s1)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	char	*ret;
+	int		i;
+	int		len;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	i = 0;
+	ret = NULL;
+	len = ft_strlen(s1);
+	ret = (char *)ft_memalloc(len + 1);
+	if (ret == NULL)
+		return (NULL);
+	while (s1[i] != '\0')
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		ret[i] = s1[i];
+		i++;
 	}
-
-
-	return (0);
+	ret[i] = '\0';
+	return (ret);
 }

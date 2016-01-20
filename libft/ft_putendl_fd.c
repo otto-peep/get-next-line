@@ -1,40 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_putendl_fd.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/24 18:38:23 by pconin            #+#    #+#             */
+/*   Updated: 2015/12/05 21:29:04 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
 #include "libft.h"
-#include <fcntl.h>
 
-int	main(void)
+void	ft_putendl_fd(char const *s, int fd)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
-
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
-	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
-	}
-
-
-	return (0);
+	ft_putstr_fd(s, fd);
+	ft_putstr_fd("\n", fd);
 }

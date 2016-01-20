@@ -1,40 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strmapi.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/29 18:11:42 by pconin            #+#    #+#             */
+/*   Updated: 2015/12/13 15:39:56 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
+#include <stdlib.h>
+#include <string.h>
 #include "libft.h"
-#include <fcntl.h>
 
-int	main(void)
+char	*ft_strmapi(char const *s, char (*f) (unsigned int, char))
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	char			*str;
+	unsigned int	a;
+	unsigned int	i;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	i = 0;
+	str = NULL;
+	if (s && f)
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		a = (char)ft_strlen(s);
+		str = (char *)malloc(sizeof(char) * (a + 1));
+		if (str == NULL)
+			return (NULL);
+		while (i != a)
+		{
+			str[i] = f(i, s[i]);
+			i++;
+		}
+		str[i] = '\0';
 	}
-
-
-	return (0);
+	return (str);
 }

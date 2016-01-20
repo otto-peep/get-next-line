@@ -1,40 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/27 13:45:13 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/11 14:34:42 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
-#include "libft.h"
-#include <fcntl.h>
+#include <string.h>
 
-int	main(void)
+void	*ft_memcpy(void *dst, const void *src, size_t n)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	size_t			i;
+	unsigned char	*s1;
+	unsigned char	*s2;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	i = 0;
+	s1 = (unsigned char *)src;
+	s2 = (unsigned char *)dst;
+	while (i < n)
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		s2[i] = s1[i];
+		i++;
 	}
-
-
-	return (0);
+	return ((unsigned char *)dst);
 }

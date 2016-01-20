@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strsub.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/27 16:57:13 by pconin            #+#    #+#             */
+/*   Updated: 2015/12/24 19:59:31 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
+#include <stdlib.h>
+#include <string.h>
 #include "libft.h"
-#include <fcntl.h>
 
-int	main(void)
+char	*ft_strsub(char const *s, unsigned int start, size_t len)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	char	*dst;
+	size_t	index;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	index = 0;
+	if (!s)
+		return (NULL);
+	dst = NULL;
+	dst = (char *)ft_memalloc(len + 1);
+	if (dst == NULL)
+		return (NULL);
+	while (index != len)
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		dst[index] = s[start + index];
+		index++;
 	}
-
-
-	return (0);
+	dst[index] = '\0';
+	return (dst);
 }

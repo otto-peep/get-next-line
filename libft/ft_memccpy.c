@@ -1,40 +1,37 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memccpy.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/27 14:46:35 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/11 14:31:12 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
-#include "libft.h"
-#include <fcntl.h>
+#include <string.h>
 
-int	main(void)
+void	*ft_memccpy(void *dest, const void *src, int c, size_t n)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	size_t			i;
+	unsigned char	*str1;
+	unsigned char	*str2;
+	unsigned char	car;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	i = 0;
+	car = (unsigned char)c;
+	str1 = (unsigned char *)dest;
+	str2 = (unsigned char *)src;
+	while (i < n)
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		str1[i] = str2[i];
+		if (str1[i] == car)
+		{
+			i++;
+			return (&dest[i]);
+		}
+		i++;
 	}
-
-
-	return (0);
+	return (NULL);
 }

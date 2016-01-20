@@ -1,40 +1,25 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strcpy.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/23 16:02:06 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/11 14:39:07 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
-#include "libft.h"
-#include <fcntl.h>
-
-int	main(void)
+char	*ft_strcpy(char *dst, const char *src)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	int i;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	i = 0;
+	while (src[i] != '\0')
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		dst[i] = src[i];
+		i++;
 	}
-
-
-	return (0);
+	dst[i] = '\0';
+	return (dst);
 }

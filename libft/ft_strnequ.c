@@ -1,40 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnequ.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/29 18:31:31 by pconin            #+#    #+#             */
+/*   Updated: 2015/12/08 16:47:26 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
-#include "libft.h"
-#include <fcntl.h>
+#include <string.h>
 
-int	main(void)
+int		ft_strnequ(char const *s1, char const *s2, size_t n)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	size_t	a;
 
 	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	if (s1 && s2 && n > 0)
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		while (s1[a] == s2[a] && s1[a] && s2[a] && a < (n - 1))
+			a++;
+		if (s1[a] == s2[a])
+			return (1);
+		else
+			return (0);
 	}
-
-
-	return (0);
+	else if (n == 0)
+		return (1);
+	else
+		return (0);
 }

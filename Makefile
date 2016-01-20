@@ -2,9 +2,9 @@ NAME = gnl
 
 LIB = -L ./libft -lft
 
-SRC = ./get_next_line.c	./main.c
+SRC = ./newgnl.c	./main.c
 
-HEAD = -I ./get_next_line.h
+HEAD = -I ./ -I ./libft/
 
 all: $(NAME)
 

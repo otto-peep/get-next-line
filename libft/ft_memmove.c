@@ -1,40 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memmove.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/12/07 15:06:53 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/11 14:35:00 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
 #include "libft.h"
-#include <fcntl.h>
 
-int	main(void)
+void	*ft_memmove(void *dest, const void *src, size_t n)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	unsigned char	*d;
+	unsigned char	*s;
+	size_t			a;
 
 	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	d = (unsigned char *)dest;
+	s = (unsigned char *)src;
+	if (dest > src)
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		a = n;
+		while (n--)
+		{
+			a--;
+			d[a] = s[a];
+		}
 	}
-
-
-	return (0);
+	else
+		ft_memcpy(dest, src, n);
+	return (dest);
 }

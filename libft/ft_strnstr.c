@@ -1,40 +1,40 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/27 10:17:03 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/11 14:45:13 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
+#include <string.h>
 #include "libft.h"
-#include <fcntl.h>
 
-int	main(void)
+char	*ft_strnstr(const char *s1, const char *s2, size_t n)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	size_t	x;
+	size_t	y;
+	size_t	check;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	check = ft_strlen(s2);
+	x = 0;
+	if (!s2[0])
+		return ((char *)s1);
+	while (x < n && s1[x] != '\0')
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		y = 0;
+		while (s2[y] == s1[x + y] && s2[y])
+		{
+			if (x + y >= n)
+				return (NULL);
+			if (y == check - 1)
+				return ((char*)&s1[x]);
+			y++;
+		}
+		x++;
 	}
-
-
-	return (0);
+	return (NULL);
 }

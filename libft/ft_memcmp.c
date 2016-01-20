@@ -1,40 +1,31 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_memcmp.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/30 19:40:25 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/11 14:33:54 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
-#include "libft.h"
-#include <fcntl.h>
+#include <string.h>
 
-int	main(void)
+int		ft_memcmp(const void *s1, const void *s2, size_t n)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	unsigned char	*src;
+	unsigned char	*dst;
+	size_t			i;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	i = 0;
+	src = (unsigned char *)s1;
+	dst = (unsigned char *)s2;
+	while (n > i)
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		if (src[i] != dst[i])
+			return (src[i] - dst[i]);
+		i++;
 	}
-
-
 	return (0);
 }

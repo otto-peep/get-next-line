@@ -1,40 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strrchr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/26 17:28:37 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/11 14:45:42 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
 #include "libft.h"
-#include <fcntl.h>
 
-int	main(void)
+char	*ft_strrchr(const char *s, int c)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	int		a;
+	char	*b;
 
 	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	b = NULL;
+	while (s[a] != '\0')
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
+		if (s[a] == c)
+			b = (char *)&s[a];
 		a++;
 	}
-
-
-	return (0);
+	if (s[a] == c)
+		return ((char *)&s[a]);
+	else
+		return (b);
 }

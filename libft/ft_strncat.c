@@ -1,40 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strncat.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/26 16:08:23 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/11 14:48:44 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
+#include <string.h>
 #include "libft.h"
-#include <fcntl.h>
 
-int	main(void)
+char	*ft_strncat(char *s1, const char *s2, size_t n)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	size_t len;
+	size_t a;
 
 	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	len = ft_strlen(s1);
+	while (s2[a] && a < n)
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
+		s1[len + a] = s2[a];
 		a++;
 	}
-
-
-	return (0);
+	s1[len + a] = '\0';
+	return (s1);
 }

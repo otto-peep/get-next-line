@@ -1,40 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   ft_strjoin.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:40:34 by pconin           ###   ########.fr       */
+/*   Created: 2015/11/27 17:35:17 by pconin            #+#    #+#             */
+/*   Updated: 2015/12/07 14:26:39 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include <unistd.h>
-#include <stdio.h>
-#include "get_next_line.h"
+#include <stdlib.h>
+#include <string.h>
 #include "libft.h"
-#include <fcntl.h>
 
-int	main(void)
+char	*ft_strjoin(char const *s1, char const *s2)
 {
-	int ret;
-	char **tab;
-	int fd;
-	int a;
+	int		size;
+	char	*rtn;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 4)
+	if (!s1 && !s2)
+		return (NULL);
+	if (s1 && s2)
 	{
-		ret = get_next_line(0, tab);
-		ft_putstr(*tab);
-		ft_putnbr(ret);
-		ft_putstr("\n");
-		a++;
+		size = ft_strlen(s1) + ft_strlen(s2);
+		rtn = (char *)malloc(sizeof(char) * (size + 1));
+		if (rtn == NULL)
+			return (NULL);
+		ft_strcpy(rtn, s1);
+		ft_strcat(rtn, s2);
+		return (rtn);
 	}
-
-
-	return (0);
+	if (s1 && !s2)
+		return (ft_strdup(s1));
+	else
+		return (ft_strdup(s2));
 }
