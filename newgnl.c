@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 16:46:39 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 17:43:45 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/21 13:53:29 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,9 @@ void	ft_put_in_line(char *tmp, char *line)
 	l = 0;
 	while (tmp[l] != '\n')
 	{
+		ft_putstr("inside if \n");
 		line[l] = tmp[l];
+		ft_putstr("after");
 		l++;
 	}
 }
@@ -49,15 +51,24 @@ int		get_next_line(int const fd, char **line)
 	
 	if (tmp == NULL)
 		tmp = ft_memalloc(BUFF_SIZE + 1);
+//	ft_putstr("beforewhile");
 	while (found_newline(tmp) != 1)
 	{
+//		ft_putnbr(found_newline(tmp));
  		ret = read(fd, buf, BUFF_SIZE);
-		tmp = ft_strjoin(tmp, buf);
+		buf[ret] = '\0';
+//		ft_putstr(buf);
+		tmp = ft_strcpy(tmp, buf);
+		ft_putstr(tmp);
 //		free(buf);
 	}
+//	ft_putstr(tmp);
+//	ft_putstr("\n");
 	if (found_newline(tmp) == 1)
 	{
+		ft_putstr("avant putinline \n");
 		ft_put_in_line(tmp, *line);
+		ft_putstr("avant strchr \n");
 		tmp = ft_strchr(tmp, '\n');
 	}
 	if (ret != 0 && ret != -1)
