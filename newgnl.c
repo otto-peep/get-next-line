@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 16:46:39 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/21 13:53:29 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/21 16:44:34 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,24 +17,30 @@
 #include <unistd.h>
 #include <stdlib.h>
 
-void	ft_put_in_line(char *tmp, char *line)
+char	*ft_put_in_line(char *tmp)
 {
-	int l;
+	char *ret;
+	int		len;
 
-	l = 0;
-	while (tmp[l] != '\n')
+	len = 0;
+	while (tmp[len] != '\n')
+		len++;
+	ret = (char *) malloc (sizeof(char) * len);
+	len = 0;
+	while (tmp[len] != '\n')
 	{
-		ft_putstr("inside if \n");
-		line[l] = tmp[l];
-		ft_putstr("after");
-		l++;
+		ret[len] = tmp[len];
+		len++;
 	}
+	tmp[len] = '\0';
+	return (ret);
 }
 int		found_newline(char *tmp)
 {
 	int i;
 
-	while (tmp[i])
+	i = 0;
+	while (tmp[i] != '\0')
 	{
 		if (tmp[i] == '\n')
 			return (1);
@@ -51,24 +57,24 @@ int		get_next_line(int const fd, char **line)
 	
 	if (tmp == NULL)
 		tmp = ft_memalloc(BUFF_SIZE + 1);
-//	ft_putstr("beforewhile");
+
 	while (found_newline(tmp) != 1)
 	{
-//		ft_putnbr(found_newline(tmp));
  		ret = read(fd, buf, BUFF_SIZE);
+		if (ret == -1 || ret == 0)
+			return (ret);
 		buf[ret] = '\0';
-//		ft_putstr(buf);
-		tmp = ft_strcpy(tmp, buf);
-		ft_putstr(tmp);
-//		free(buf);
+		ft_putstr(buf);
+//		ft_putstr(tmp);
+//		ft_putstr("tour");
+		tmp = ft_strjoin(tmp, buf);
+//		ft_putstr(tmp);
 	}
+//	ft_putstr("afficher tmp apres while : \n");
 //	ft_putstr(tmp);
-//	ft_putstr("\n");
 	if (found_newline(tmp) == 1)
 	{
-		ft_putstr("avant putinline \n");
-		ft_put_in_line(tmp, *line);
-		ft_putstr("avant strchr \n");
+		*line = ft_put_in_line(tmp);
 		tmp = ft_strchr(tmp, '\n');
 	}
 	if (ret != 0 && ret != -1)

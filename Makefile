@@ -9,7 +9,7 @@ HEAD = -I ./ -I ./libft/
 all: $(NAME)
 
 $(NAME):
-		gcc -o $(NAME) $(SRC) $(HEAD) $(LIB)
+		gcc -Wall -Wextra -Werror -o $(NAME) $(SRC) $(HEAD) $(LIB)
 
 clean:
 		rm -f $(NAME)
