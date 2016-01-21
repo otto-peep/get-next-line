@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 16:46:39 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/21 16:44:34 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/21 17:43:53 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@
 #include <sys/uio.h>
 #include <unistd.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 char	*ft_put_in_line(char *tmp)
 {
@@ -57,25 +58,27 @@ int		get_next_line(int const fd, char **line)
 	
 	if (tmp == NULL)
 		tmp = ft_memalloc(BUFF_SIZE + 1);
-
+//	ft_putstr(tmp);
 	while (found_newline(tmp) != 1)
 	{
+//		ft_putnbr(found_newline(tmp));
  		ret = read(fd, buf, BUFF_SIZE);
 		if (ret == -1 || ret == 0)
 			return (ret);
 		buf[ret] = '\0';
-		ft_putstr(buf);
-//		ft_putstr(tmp);
-//		ft_putstr("tour");
 		tmp = ft_strjoin(tmp, buf);
+//		ft_putstr("tmp:");
 //		ft_putstr(tmp);
 	}
 //	ft_putstr("afficher tmp apres while : \n");
-//	ft_putstr(tmp);
+	ft_putstr(tmp);
 	if (found_newline(tmp) == 1)
 	{
 		*line = ft_put_in_line(tmp);
-		tmp = ft_strchr(tmp, '\n');
+//		ft_putstr("apres putinline");
+		printf("%s", tmp);
+		tmp = ft_strchr(tmp, 10);
+		printf("%s", tmp);
 	}
 	if (ret != 0 && ret != -1)
 		ret = 1;
