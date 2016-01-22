@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/01/20 16:46:39 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/21 17:43:53 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/22 14:38:59 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,21 @@
 #include <unistd.h>
 #include <stdlib.h>
 #include <stdio.h>
+
+char	*ft_strnl(const char *s)
+{
+	int		a;
+	char	*b;
+
+	b = (char *)s;
+	a = 0;
+	while (b[a] != '\n' && b[a])
+		a++;
+	if (b[a] == '\n')
+		return (&b[a + 1]);
+	else
+		return (NULL);
+}
 
 char	*ft_put_in_line(char *tmp)
 {
@@ -33,7 +48,7 @@ char	*ft_put_in_line(char *tmp)
 		ret[len] = tmp[len];
 		len++;
 	}
-	tmp[len] = '\0';
+	ret[len] = '\0';
 	return (ret);
 }
 int		found_newline(char *tmp)
@@ -55,30 +70,22 @@ int		get_next_line(int const fd, char **line)
 	static char	*tmp = NULL;
 	char		buf[BUFF_SIZE + 1];
 	int			ret;
-	
+
 	if (tmp == NULL)
 		tmp = ft_memalloc(BUFF_SIZE + 1);
 //	ft_putstr(tmp);
 	while (found_newline(tmp) != 1)
 	{
-//		ft_putnbr(found_newline(tmp));
- 		ret = read(fd, buf, BUFF_SIZE);
+		ret = read(fd, buf, BUFF_SIZE);
 		if (ret == -1 || ret == 0)
 			return (ret);
 		buf[ret] = '\0';
 		tmp = ft_strjoin(tmp, buf);
-//		ft_putstr("tmp:");
-//		ft_putstr(tmp);
 	}
-//	ft_putstr("afficher tmp apres while : \n");
-	ft_putstr(tmp);
 	if (found_newline(tmp) == 1)
 	{
 		*line = ft_put_in_line(tmp);
-//		ft_putstr("apres putinline");
-		printf("%s", tmp);
-		tmp = ft_strchr(tmp, 10);
-		printf("%s", tmp);
+		tmp = ft_strnl(tmp);
 	}
 	if (ret != 0 && ret != -1)
 		ret = 1;
