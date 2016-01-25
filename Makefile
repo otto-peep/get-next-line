@@ -2,7 +2,7 @@ NAME = gnl
 
 LIB = -L ./libft -lft
 
-SRC = ./newgnl.c	./main.c
+SRC = ./get_next_line.c	./moulitest.c
 
 HEAD = -I ./ -I ./libft/
 

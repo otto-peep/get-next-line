@@ -5,80 +5,88 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/01/19 12:29:38 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/20 15:18:21 by pconin           ###   ########.fr       */
+/*   Created: 2016/01/22 15:18:19 by pconin            #+#    #+#             */
+/*   Updated: 2016/01/25 19:43:15 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#define BUFFSIZE	1024
+#include "libft.h"
+#include <sys/types.h>
+#include <sys/uio.h>
+#include <stdlib.h>
+#include "get_next_line.h"
+#include <unistd.h>
 
-char	*finish(char *l, int j)
+char	*ft_strnl(const char *s)
 {
-	static int    tmp = 0;
-	if (j == 0)
-		return (0);
-	if (tmp == 0)
-	{
-		tmp = 1;
-		return (l);
-	}
+	int		a;
+	char	*b;
+
+	b = (char *)s;
+	a = 0;
+	while (b[a] != '\n' && b[a])
+		a++;
+	if (b[a] == '\n')
+		return (&b[a + 1]);
 	else
-		return (0);
+		return (NULL);
 }
 
-char    *ft_alloc(char *l, int j)
+char	*ft_put_in_line(char *tmp, int r)
 {
-	int   i;
-	char  *new;
+	char *ret;
+	int		len;
+
+	len = 0;
+	while (tmp[len] != '\n' || (tmp[len] && r == 0))
+		len++;
+	ret = (char *) malloc (sizeof(char) * len);
+	len = 0;
+	while (tmp[len] != '\n' || (tmp[len] && r == 0))
+	{
+		ret[len] = tmp[len];
+		len++;
+	}
+	ret[len] = '\0';
+	return (ret);
+}
+int		found_newline(char *tmp, int ret)
+{
+	int i;
 
 	i = 0;
-	new = NULL;
-	if (j == 0 && ((l = malloc((BUFFSIZE + 1) * sizeof(char))) == NULL))
-		return (-1);
-	if (j == 0)
-		return (l);
-	if ((new = malloc((j + BUFFSIZE + 1) * sizeof(char))) == NULL)
-		return (-1);
-	while (i <= j)
+	while (tmp[i])
 	{
-		new[i] = l[i];
-		i++;
-	}
-	new[i] = '\0';
-	free(l);
-	return (new);
-}
-
-char *ft_get_next_line(int const fd, char **l)
-{
-	static int	i = 0;
-	static int	j = 0;
-	static int	k = 0;
-	static char	buff[BUFFSIZE];
-
-	if (i == 0 && (k = read(fd, buff, BUFFSIZE)) == 0)
-	{
-		
-		return (finish(l[nb], j));
-	if ((l[nb] = ft_alloc(l[nb], j)) == NULL)
-		return (-1);
-	while (i < k)
-	{
-		if (buff[i] == '\n')
-		{
-			i++;
-			l[j] = '\0';
-			j = 0;
-			nb++;
+		if (tmp[i] == '\n' || (!tmp[i] && ret == 0))
 			return (1);
-		}
-		if (!buff[i])
-			return (0);
-		*l[j] = buff[i];
 		i++;
-		j++;
 	}
-	i = 0;
-	return (get_next_line(fd));
+	return (0);
 }
+int		get_next_line(int const fd, char **line)
+{
+	static char	*tmp = NULL;
+	char		buf[BUFF_SIZE + 1];
+	static	int			ret = 0;
 
+	*line = ft_strnew(0);
+	ft_bzero(buf, BUFF_SIZE);
+	if (tmp == NULL)
+		tmp = ft_memalloc(BUFF_SIZE + 1);
+	while (found_newline(tmp, ret) != 1)
+	{
+		ret = read(fd, buf, BUFF_SIZE);
+		if (ret == -1)
+			return (ret);
+		buf[ret] = '\0';
+		tmp = ft_strjoin(tmp, buf);
+	}
+	if (found_newline(tmp, ret) == 1)
+	{
+		*line = ft_put_in_line(tmp, ret);
+		tmp = ft_strnl(tmp);
+	}
+	if (ret != 0 && ret != -1)
+		ret = 1;
+	return (ret);
+}
