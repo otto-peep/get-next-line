@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/26 19:05:44 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/26 20:58:22 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ int	main(void)
 		free(line);
 		line = NULL;
 	}
-//	ft_putstr(line);
+	ft_putstr(line);
 	ft_putnbr(ret);
 
 	return (0);
