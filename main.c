@@ -6,7 +6,7 @@
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2015/12/08 11:06:13 by pconin            #+#    #+#             */
-/*   Updated: 2016/01/25 18:26:58 by pconin           ###   ########.fr       */
+/*   Updated: 2016/01/26 19:05:44 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,27 +15,24 @@
 #include "get_next_line.h"
 #include "libft.h"
 #include <fcntl.h>
+#include <stdlib.h>
 
 int	main(void)
 {
 	int ret;
 	char *line = NULL;
-	int fd;
-	int a;
 
-	a = 0;
-//	fd = open("readme.txt", O_RDWR);
-	fd = 0;
-	while (a != 2)
+	while ((ret = get_next_line(0, &line)) > 0)
 	{
-		ret = get_next_line(0, &line);
+//		ft_putstr("avant putstr");
 		ft_putstr(line);
 		ft_putnbr(ret);
-//		ft_bzero(line, 30);
-		ft_putstr("\n entre deux appels\n");
-		a++;
+		ft_putstr("\n");
+		free(line);
+		line = NULL;
 	}
-
+//	ft_putstr(line);
+	ft_putnbr(ret);
 
 	return (0);
 }
