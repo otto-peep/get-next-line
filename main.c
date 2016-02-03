@@ -40,7 +40,7 @@ int main(int argc, char **argv)
 
 	if (argc != 2)
 		ft_error("Bad number of argument !");
-	fd1 = ft_open_rdly(argv[1]);
+	 fd1 = ft_open_rdly(argv[1]);
 	if (argv[1])
 		printf("Fd1: %d\n", fd1);
 	while ((r = get_next_line(fd1, &line)) > 0)
@@ -56,6 +56,8 @@ int main(int argc, char **argv)
 		free(line);
 		line = NULL;
 	}
+	printf("r: %d", r);
+	r = get_next_line(fd1, &line);
 	printf("r: %d", r);
 	ft_close(fd1);
 }

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: pconin <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/02/03 16:27:59 by pconin            #+#    #+#             */
-/*   Updated: 2016/02/03 19:14:09 by pconin           ###   ########.fr       */
+/*   Created: 2016/01/26 15:49:59 by pconin            #+#    #+#             */
+/*   Updated: 2016/02/03 17:01:11 by pconin           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,37 +18,41 @@
 #include "get_next_line.h"
 #include <unistd.h>
 
-size_t		found_newline(char *tmp)
+int		found_newline2(char *tmp)
 {
-	int i;
+	int index;
 
-	i = 0;
-	while (tmp[i] != '\n' && tmp[i])
-		i++;
-	return (i);
+	index = 0;
+	if (!tmp)
+		return (0);
+	while (tmp[index] && tmp[index] != '\n')
+		index++;
+	if (tmp[index] == '\n')
+		return (index + 1);
+	else
+		return (0);
 }
 
-size_t		newline(char *tmp)
+int		found_newline(char *tmp, int ret)
 {
-	int i;
+	int index;
 
-	i = 0;
-	while (tmp[i])
-	{
-		if (tmp[i] == '\n')
-			return (1);
-		i++;
-	}
-	return (0);
+	index = 0;
+	if (!tmp)
+		return (0);
+	while (tmp[index] && tmp[index] != '\n')
+		index++;
+	if (tmp[index] == '\n' || (!tmp[index] && ret == 0))
+		return (index);
+	else
+		return (0);
 }
 
 void	ft_read(int fd, char **tmp, int *ret)
 {
-	char *buf;
-	char *mem;
+	char	*buf;
+	char	*mem;
 
-	mem = NULL;
-	buf = NULL;
 	buf = ft_strnew(BUFF_SIZE + 1);
 	*ret = read(fd, buf, BUFF_SIZE);
 	if (*ret == -1)
@@ -66,25 +70,22 @@ int		get_next_line(int const fd, char **line)
 	int			ret;
 	char		*mem;
 
-	ret = 1;
-	mem = NULL;
-	if (tmp == NULL)
-		tmp = ft_strnew(BUFF_SIZE + 1);
-	if (fd < 0 || line == NULL)
+	ret = 0;
+	if (fd < 0 || !line)
 		return (-1);
-	while (ret > 0 && newline(tmp) == 0 && tmp != NULL)
+	while (tmp == NULL || (found_newline(tmp, ret) == 0 && ret >= 0))
 	{
 		ft_read(fd, &tmp, &ret);
-		if (found_newline(tmp) != ft_strlen(tmp) || ret == -1)
+		if (ret <= 0)
 			break ;
 	}
-	if (ret == -1 || tmp == NULL)
+	if (ret == -1)
 		return (-1);
-	*line = ft_strsub(tmp, 0, found_newline(tmp));
-	if (!(ft_strlen(tmp)) && ret == 0)
-		return (0);
+	*line = ft_strsub(tmp, 0, found_newline(tmp, ret));
 	mem = tmp;
-	tmp = ft_strsub(tmp, found_newline(tmp) + 1, ft_strlen(tmp));
+	tmp = ft_strsub(tmp, found_newline2(tmp, ret) + 1, ft_strlen(tmp));
 	free(mem);
+	if (ft_strlen(tmp) == 0 && ret == 0 && !line[0][0])
+		return (0);
 	return (1);
 }
